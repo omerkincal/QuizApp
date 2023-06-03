@@ -30,6 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  hidden_drawer_menu: ^3.0.1
 
 
   # The following adds the Cupertino Icons font to your application.

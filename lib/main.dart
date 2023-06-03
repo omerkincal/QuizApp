@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ypyprojeodevi/splash_screen.dart';
+import 'package:ypyprojeodevi/screens/splash_screen.dart';
 
 void main(List<String> args) {
   runApp(const MyApp());
@@ -15,15 +15,17 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
-
- 
-  
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
+      theme: ThemeData(
+        primarySwatch: Colors.deepPurple,
+        brightness: Brightness.light,
+        primaryColor: Colors.deepPurple[800],
+        fontFamily: 'Georgia',
+      ),
     );
   }
 }
