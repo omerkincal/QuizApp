@@ -1,24 +1,22 @@
-// enum Category { tarih, matematik, fen, cografya }
-
-// const categoryIcons = {
-//   Category.tarih: Icons.account_balance_outlined,
-//   Category.matematik: Icons.onetwothree_outlined,
-//   Category.fen: Icons.science,
-//   Category.cografya: Icons.map,
-// };
-
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 class Question {
+  final String questionText;
+  final List<Option> options;
+  // bool isLocked;
+  // Option? selectedOption;
+
   Question({
     required this.questionText,
     required this.options,
-    required this.correctAnswerIndex,
   });
+}
 
-  String questionText;
-  List<String> options;
-  int correctAnswerIndex;
+class Option {
+  final String text;
+  final bool isCorrect;
 
-  get QuestionAnswers {
-    return options;
-  }
+  Option({
+    required this.text,
+    required this.isCorrect,
+  });
 }
