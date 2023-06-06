@@ -13,7 +13,12 @@ class Question {
     required this.options,
     required this.correctAnswerIndex,
   });
+
   String questionText;
   List<String> options;
   int correctAnswerIndex;
+
+  get QuestionAnswers {
+    return options;
+  }
 }

@@ -94,7 +94,6 @@ class CategoryPage extends StatelessWidget {
             correctAnswerIndex: 2,
           ),
         ]),
-    // Diğer ders kategorileri...
   ];
 
   void openQuizPage(BuildContext context, int index) {
