@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ypyprojeodevi/screens/login_page.dart';
 import '../widgets/hidden_drawer.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -18,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => const HiddenDrawer()));
+          MaterialPageRoute(builder: (_) => const LoginPage()));
     });
   }
 
@@ -39,9 +40,9 @@ class _SplashScreenState extends State<SplashScreen>
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,
         ),
-        child: Column(
+        child: const Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               Icon(
                 Icons.quiz_outlined,
                 size: 80,

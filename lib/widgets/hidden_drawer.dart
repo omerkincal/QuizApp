@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hidden_drawer_menu/hidden_drawer_menu.dart';
 import 'package:ypyprojeodevi/home_page.dart';
+import 'package:ypyprojeodevi/screens/favorites_page.dart';
 import 'package:ypyprojeodevi/screens/settings_screen.dart';
 
 class HiddenDrawer extends StatefulWidget {
@@ -32,7 +33,7 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
           baseStyle: TextStyle(),
           selectedStyle: TextStyle(),
         ),
-        SettingsScreen(),
+        FavoritesPage(),
       ),
     ];
   }

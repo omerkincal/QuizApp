@@ -231,38 +231,41 @@ class CategoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      itemCount: categories.length,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2, // İki sütun
-        crossAxisSpacing: 10.0, // Sütunlar arası boşluk
-        mainAxisSpacing: 10.0, // Satırlar arası boşluk
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: GridView.builder(
+        itemCount: categories.length,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, // İki sütun
+          crossAxisSpacing: 15.0, // Sütunlar arası boşluk
+          mainAxisSpacing: 10.0, // Satırlar arası boşluk
+        ),
+        itemBuilder: (BuildContext context, int index) {
+          return GestureDetector(
+            onTap: () => openQuizPage(context, index),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                color: const Color.fromARGB(17, 0, 0, 0),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  categories[index].icon,
+                  const SizedBox(
+                    height: 14,
+                  ),
+                  Text(
+                    categories[index].name,
+                    style: const TextStyle(
+                        fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
-      itemBuilder: (BuildContext context, int index) {
-        return GestureDetector(
-          onTap: () => openQuizPage(context, index),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.0),
-              color: const Color.fromARGB(17, 0, 0, 0),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                categories[index].icon,
-                const SizedBox(
-                  height: 14,
-                ),
-                Text(
-                  categories[index].name,
-                  style: const TextStyle(
-                      fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
     );
   }
 }

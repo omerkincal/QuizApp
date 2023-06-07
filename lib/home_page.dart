@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:ypyprojeodevi/screens/main_page.dart';
-import 'package:ypyprojeodevi/screens/settings_screen.dart';
 import 'package:ypyprojeodevi/widgets/categories_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,7 +17,6 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _pages = [
     const MainPage(),
     CategoryPage(),
-    const SettingsScreen(),
   ];
   void _navigationBottomBar(int index) {
     setState(() {
@@ -49,15 +47,11 @@ class _HomePageState extends State<HomePage> {
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              label: 'Ana Sayfa',
+              label: 'Home Page',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.category),
-              label: 'Kategoriler',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              label: 'Ayarlar',
+              label: 'Categories',
             ),
           ],
         ),

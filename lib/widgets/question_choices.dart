@@ -183,7 +183,7 @@ class _QuestionShowingState extends State<QuestionShowing> {
         style: ElevatedButton.styleFrom(
           shape: const StadiumBorder(),
           backgroundColor:
-              isSelected ? Colors.green : Colors.deepPurple.shade200,
+              isSelected ? Colors.blue : Colors.deepPurple.shade200,
           foregroundColor: isSelected ? Colors.white : Colors.white,
         ),
         onPressed: () {
@@ -228,22 +228,36 @@ class _QuestionShowingState extends State<QuestionShowing> {
             });
           }
         },
-        child: isLastQuestion ? Text('Sonucu Gör') : Text('Next'),
+        child:
+            isLastQuestion ? const Text('See the result') : const Text('Next'),
       ),
     );
   }
 
   _showScoreDialog() {
+    bool isPassed = false;
+    if (score >= widget.questionsList.length * 0.6) {
+      isPassed = true;
+    }
+    String title = isPassed ? "Passed" : "Failed";
     return AlertDialog(
-      title: Text('Tebrik ederim'),
-      content: Text(score.toString()),
+      title: Text(
+        '$title and your score is $score',
+        style: TextStyle(
+            color: isPassed ? Colors.green : Colors.red,
+            fontWeight: FontWeight.bold),
+      ),
       actions: [
         TextButton(
             onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (_) => CategoryPage()));
+              Navigator.pop(context);
+              setState(() {
+                currentQuestionIndex = 0;
+                score = 0;
+                selectedOption = null;
+              });
             },
-            child: Text('Bitir'))
+            child: const Text('Restart'))
       ],
     );
   }
