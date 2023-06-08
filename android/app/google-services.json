@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "185863830826",
+    "project_id": "quizapp-27406",
+    "storage_bucket": "quizapp-27406.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:185863830826:android:33e8929874825077447253",
+        "android_client_info": {
+          "package_name": "com.example.ypyprojeodevi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "185863830826-14k7o7vuik45o9ou344oj92ud58bg678.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnlnHy6-jcINCXj4yDpat5KeTy73ksOS0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "185863830826-14k7o7vuik45o9ou344oj92ud58bg678.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "185863830826-r2f957plfhueeuad51i3cikuv3acovle.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ypyprojeodevi"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

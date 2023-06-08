@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ypyprojeodevi/screens/login_page.dart';
-import '../widgets/hidden_drawer.dart';
+// import '../widgets/hidden_drawer.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

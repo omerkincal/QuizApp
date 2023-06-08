@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hidden_drawer_menu/hidden_drawer_menu.dart';
 import 'package:ypyprojeodevi/home_page.dart';
 import 'package:ypyprojeodevi/screens/favorites_page.dart';
-import 'package:ypyprojeodevi/screens/settings_screen.dart';
+// import 'package:ypyprojeodevi/screens/settings_screen.dart';
 
 class HiddenDrawer extends StatefulWidget {
   const HiddenDrawer({super.key});
