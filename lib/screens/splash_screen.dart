@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ypyprojeodevi/home_page.dart';
 import 'package:ypyprojeodevi/screens/login_page.dart';
-import 'package:ypyprojeodevi/widgets/hidden_drawer.dart';
-// import '../widgets/hidden_drawer.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -20,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (_) => StreamBuilder(
                 stream: FirebaseAuth.instance.authStateChanges(),

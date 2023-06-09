@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ypyprojeodevi/screens/signup.dart';
 
+import '../widgets/quizappbar_text.dart';
+
 final _firebase = FirebaseAuth.instance;
 
 class LoginPage extends StatefulWidget {
@@ -35,49 +37,34 @@ class _LoginPageState extends State<LoginPage> {
   //   }
   // }
 
-  _signIn() async {
+  void _signIn() async {
     final isValid = _formKey.currentState!.validate();
     if (!isValid) {
       return;
     }
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        });
     _formKey.currentState!.save();
 
     final userCredentials = await _firebase.signInWithEmailAndPassword(
       email: _enteredEmail,
       password: _enteredPassword,
     );
+    Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-        title: Center(
-          child: RichText(
-              textAlign: TextAlign.center,
-              text: const TextSpan(
-                style: TextStyle(fontSize: 34),
-                children: [
-                  TextSpan(
-                    text: 'Quiz',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                    ),
-                  ),
-                  TextSpan(
-                    text: 'App',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.deepPurple,
-                    ),
-                  ),
-                ],
-              )),
-        ),
-      ),
+          elevation: 0.0,
+          backgroundColor: Colors.transparent,
+          title: appBar(context)),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
@@ -129,16 +116,18 @@ class _LoginPageState extends State<LoginPage> {
                   },
                 ),
                 const SizedBox(height: 20),
-                GestureDetector(
-                  onTap: _signIn,
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 20),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      color: Colors.deepPurple,
+                Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.deepPurple,
+                  ),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      foregroundColor: Colors.deepPurple.shade300,
                     ),
+                    onPressed: _signIn,
                     child: const Text(
                       'Login',
                       style: TextStyle(
