@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ypyprojeodevi/home_page.dart';
 import 'package:ypyprojeodevi/screens/login_page.dart';
+import 'package:ypyprojeodevi/widgets/hidden_drawer.dart';
 // import '../widgets/hidden_drawer.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -18,8 +21,16 @@ class _SplashScreenState extends State<SplashScreen>
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
     Future.delayed(const Duration(seconds: 3), () {
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => const LoginPage()));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (_) => StreamBuilder(
+                stream: FirebaseAuth.instance.authStateChanges(),
+                builder: (ctx, snapshot) {
+                  if (snapshot.hasData) {
+                    return const HomePage();
+                  }
+                  return const LoginPage();
+                },
+              )));
     });
   }
 

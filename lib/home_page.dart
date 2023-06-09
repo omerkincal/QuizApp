@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:ypyprojeodevi/screens/main_page.dart';
 import 'package:ypyprojeodevi/widgets/categories_page.dart';
+import 'package:ypyprojeodevi/widgets/drawer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -27,6 +28,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: drawer(context),
+      appBar: AppBar(
+        title: const Text('Home Page'),
+      ),
       body: Container(
           width: double.infinity,
           height: double.infinity,

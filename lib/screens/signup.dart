@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import 'login_page.dart';
+
+final _firebase = FirebaseAuth.instance;
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -11,9 +13,28 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
-  late String name, email, password;
-  signUp() {
-    if (_formKey.currentState!.validate()) {}
+  var _enteredEmail = '';
+  var _enteredPassword = '';
+
+  void _signUp() async {
+    final isValid = _formKey.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+    _formKey.currentState!.save();
+    try {
+      final userCredentials = await _firebase.createUserWithEmailAndPassword(
+        email: _enteredEmail,
+        password: _enteredPassword,
+      );
+      print(userCredentials);
+    } on FirebaseAuthException catch (error) {
+      if (error.code == 'email-already-in-use') {
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(error.message ?? 'Authentication failed.')));
+      }
+    }
   }
 
   @override
@@ -62,39 +83,43 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 const SizedBox(height: 50),
                 TextFormField(
+                  onSaved: (value) {
+                    _enteredEmail = value!;
+                  },
                   validator: (val) {
-                    return val!.isEmpty ? 'Enter Your Name' : null;
+                    if (val == null ||
+                        val.trim().isEmpty ||
+                        !val.contains('@')) {
+                      return 'Please enter a valid email address!';
+                    }
+                    return null;
                   },
-                  decoration: const InputDecoration(hintText: 'Name'),
-                  onChanged: (value) {
-                    name = value;
-                  },
+                  decoration: const InputDecoration(
+                    hintText: 'Email',
+                    labelText: 'Email',
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                  autocorrect: false,
+                  textCapitalization: TextCapitalization.none,
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
+                  obscureText: true,
                   validator: (val) {
-                    return val!.isEmpty ? 'Enter Email' : null;
+                    if (val == null || val.trim().length < 6) {
+                      return 'Password must be at least 7 characters long!';
+                    }
+                    return null;
                   },
-                  decoration: const InputDecoration(hintText: 'Email'),
-                  onChanged: (value) {
-                    email = value;
-                  },
-                ),
-                const SizedBox(height: 10),
-                TextFormField(
-                  validator: (val) {
-                    return val!.isEmpty ? 'Enter Password' : null;
-                  },
-                  decoration: const InputDecoration(hintText: 'Password'),
-                  onChanged: (value) {
-                    email = value;
+                  decoration: const InputDecoration(
+                      hintText: 'Password', labelText: 'Password'),
+                  onSaved: (value) {
+                    _enteredPassword = value!;
                   },
                 ),
                 const SizedBox(height: 20),
                 GestureDetector(
-                  onTap: () {
-                    signUp();
-                  },
+                  onTap: _signUp,
                   child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(vertical: 20),

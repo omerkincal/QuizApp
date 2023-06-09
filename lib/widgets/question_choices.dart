@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ypyprojeodevi/widgets/categories_page.dart';
 import 'package:ypyprojeodevi/widgets/question.dart';
-
 import '../models/questions.dart';
 
 class QuestionShowing extends StatefulWidget {
