@@ -10,5 +10,5 @@ class Category {
 
   final String name;
   final Icon icon;
-  List<Question> questions;
+  List<List<Question>> questions;
 }
