@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ypyprojeodevi/widgets/question_choices.dart';
+
+import '/widgets/question_choices.dart';
 import 'models/questions.dart';
 
 class QuestionList extends StatefulWidget {

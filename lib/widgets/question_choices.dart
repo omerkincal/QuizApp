@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ypyprojeodevi/widgets/question.dart';
+import 'question.dart';
 import '../models/questions.dart';
 
 class QuestionShowing extends StatefulWidget {
@@ -18,45 +18,52 @@ class _QuestionShowingState extends State<QuestionShowing> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-      child: Card(
-        child: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 5),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Quiz'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+        child: Card(
+          child: SingleChildScrollView(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                          '${currentQuestionIndex + 1}/${widget.questionsList.length}',
-                          textAlign: TextAlign.end,
-                          style: textStyle),
+                        '${currentQuestionIndex + 1}/${widget.questionsList.length}',
+                        textAlign: TextAlign.end,
+                        style: textStyle,
+                      ),
                     ],
                   ),
                   Row(
                     children: [
                       Expanded(
-                          flex: 3,
-                          child: Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.all(24),
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.primary,
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            child: QuestionText(
-                              questionText: widget
-                                  .questionsList[currentQuestionIndex]
-                                  .questionText,
-                            ),
-                          )),
+                        flex: 3,
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.all(24),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.primary,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: QuestionText(
+                            questionText: widget
+                                .questionsList[currentQuestionIndex]
+                                .questionText,
+                          ),
+                        ),
+                      ),
                       IconButton(
-                          onPressed: () {}, icon: const Icon(Icons.favorite))
+                        onPressed: () {},
+                        icon: const Icon(Icons.favorite),
+                      )
                     ],
                   ),
                   Column(
@@ -163,7 +170,9 @@ class _QuestionShowingState extends State<QuestionShowing> {
                   //             icon: const Icon(Icons.arrow_forward))
                   //   ],
                   // )
-                ]),
+                ],
+              ),
+            ),
           ),
         ),
       ),
@@ -242,20 +251,22 @@ class _QuestionShowingState extends State<QuestionShowing> {
       title: Text(
         '$title and your score is $score',
         style: TextStyle(
-            color: isPassed ? Colors.green : Colors.red,
-            fontWeight: FontWeight.bold),
+          color: isPassed ? Colors.green : Colors.red,
+          fontWeight: FontWeight.bold,
+        ),
       ),
       actions: [
         TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              setState(() {
-                currentQuestionIndex = 0;
-                score = 0;
-                selectedOption = null;
-              });
-            },
-            child: const Text('Restart'))
+          onPressed: () {
+            Navigator.pop(context);
+            setState(() {
+              currentQuestionIndex = 0;
+              score = 0;
+              selectedOption = null;
+            });
+          },
+          child: const Text('Restart'),
+        )
       ],
     );
   }

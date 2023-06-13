@@ -1,14 +1,17 @@
 // import 'dart:io';
+// ignore_for_file: unused_local_variable, use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:ypyprojeodevi/widgets/quizappbar_text.dart';
+
+import '../services/auth.dart';
+import '/widgets/quizappbar_text.dart';
 // import 'package:ypyprojeodevi/widgets/user_image_picker.dart';
 import 'login_page.dart';
 
-final _firebase = FirebaseAuth.instance;
-
 class SignUpPage extends StatefulWidget {
+  ///
   const SignUpPage({super.key});
 
   @override
@@ -21,22 +24,35 @@ class _SignUpPageState extends State<SignUpPage> {
   var _enteredPassword = '';
   // File? _selectedImage;
 
+  ///
+  final Auth authService = Auth();
+
   void _signUp() async {
     final isValid = _formKey.currentState!.validate();
+
+    /// Doğrulamayı geçemezse showSnackBar için uyarı göster
     if (!isValid) {
-      return;
+      ///
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Form Alanlarını Kontnrol Edin',
+          ),
+        ),
+      );
     }
 
+    /// Doğrulamayı Geçerse
+    validateForm();
+  }
+
+  void validateForm() async {
     _formKey.currentState!.save();
     try {
-      final userCredentials = await _firebase.createUserWithEmailAndPassword(
-        email: _enteredEmail,
-        password: _enteredPassword,
-      );
-      await _firebase.signInWithEmailAndPassword(
-        email: _enteredEmail,
-        password: _enteredPassword,
-      );
+      ///
+      authService.signUpwithEmailAndPassword(_enteredEmail, _enteredPassword);
+
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text('You have signed up.')));
@@ -46,11 +62,21 @@ class _SignUpPageState extends State<SignUpPage> {
       //     .child('${userCredentials.user!.uid}.jpg');
       // await storegeRef.putFile(_selectedImage!);
       // final imageUrl = await storegeRef.getDownloadURL();
+
+      /// [LogInPage] sayfasına Git
+      // Navigator.of(context).push(
+      //   MaterialPageRoute(builder: (_) => const LoginPage()),
+      // );
     } on FirebaseAuthException catch (error) {
       if (error.code == 'email-already-in-use') {
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(error.message ?? 'Authentication failed.')));
+          SnackBar(
+            content: Text(
+              error.message ?? 'Authentication failed.',
+            ),
+          ),
+        );
       }
     }
   }
@@ -59,16 +85,18 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          elevation: 0.0,
-          backgroundColor: Colors.transparent,
-          title: appBar(context)),
+        elevation: 0.0,
+        backgroundColor: Colors.transparent,
+        title: appBar(
+          context,
+        ),
+      ),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 25),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Icon(
@@ -101,7 +129,6 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   keyboardType: TextInputType.emailAddress,
                   autocorrect: false,
-                  textCapitalization: TextCapitalization.none,
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
@@ -113,7 +140,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     return null;
                   },
                   decoration: const InputDecoration(
-                      hintText: 'Password', labelText: 'Password'),
+                    hintText: 'Password',
+                    labelText: 'Password',
+                  ),
                   onSaved: (value) {
                     _enteredPassword = value!;
                   },
@@ -148,10 +177,11 @@ class _SignUpPageState extends State<SignUpPage> {
                     GestureDetector(
                       onTap: () {
                         Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const LoginPage(),
-                            ));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginPage(),
+                          ),
+                        );
                       },
                       child: const Text(
                         'Sign In',

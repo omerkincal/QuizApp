@@ -5,26 +5,39 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin:
-          const EdgeInsetsDirectional.symmetric(vertical: 60, horizontal: 50),
-      child: const Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'QuizApp\' e Hoş Geldin',
-            style: TextStyle(fontSize: 24, color: Colors.white),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text(
+          'QuizApp\' e Hoş Geldin',
+          style: TextStyle(fontSize: 36, color: Colors.white),
+        ),
+        const SizedBox(height: 40),
+        Container(
+          width: 300,
+          height: 300,
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(15.0)),
+            color: Colors.deepPurple[800],
           ),
-          Text(
+          child: Image.asset(
+            'assets/quizApp.png',
+            width: 300,
+            height: 300,
+          ),
+        ),
+        Container(
+          margin: const EdgeInsets.all(10),
+          child: const Text(
             'Burada bilgilerini istediğin kategorideki quizler ile test edebilir \n ve derslerindeki gelişimini hızlandırabilirsin :)',
             style: TextStyle(
-              color: Colors.white,
-              fontSize: 15,
+              color: Color.fromARGB(255, 255, 255, 255),
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

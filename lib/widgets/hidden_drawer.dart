@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hidden_drawer_menu/hidden_drawer_menu.dart';
-import 'package:ypyprojeodevi/home_page.dart';
-import 'package:ypyprojeodevi/screens/favorites_page.dart';
+import '../home_page.dart';
+import '../screens/favorites_page.dart';
 
 class HiddenDrawer extends StatefulWidget {
   const HiddenDrawer({super.key});
@@ -21,18 +21,18 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
       ScreenHiddenDrawer(
         ItemHiddenMenu(
           name: 'Home Page',
-          baseStyle: TextStyle(),
-          selectedStyle: TextStyle(),
+          baseStyle: const TextStyle(),
+          selectedStyle: const TextStyle(),
         ),
-        HomePage(),
+        const HomePage(),
       ),
       ScreenHiddenDrawer(
         ItemHiddenMenu(
           name: 'Favorite Questions',
-          baseStyle: TextStyle(),
-          selectedStyle: TextStyle(),
+          baseStyle: const TextStyle(),
+          selectedStyle: const TextStyle(),
         ),
-        FavoritesPage(),
+        const FavoritesPage(),
       ),
     ];
   }
@@ -42,7 +42,6 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
     return HiddenDrawerMenu(
       screens: _pages,
       backgroundColorMenu: Colors.deepPurple.shade200,
-      initPositionSelected: 0,
       slidePercent: 60,
     );
   }

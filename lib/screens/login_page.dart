@@ -1,8 +1,11 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:ypyprojeodevi/screens/signup.dart';
 
-import '../widgets/quizappbar_text.dart';
+import '../services/auth.dart';
+import '/screens/signup.dart';
+import '/widgets/quizappbar_text.dart';
 
 final _firebase = FirebaseAuth.instance;
 
@@ -19,6 +22,8 @@ class _LoginPageState extends State<LoginPage> {
   var _enteredPassword = '';
   // AuthService authService = AuthService();
   bool isLoading = false;
+
+  final Auth authService = Auth();
 
   // signIn() async {
   //   if (_formKey.currentState!.validate()) {
@@ -43,35 +48,52 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
     showDialog(
-        context: context,
-        builder: (context) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        });
+      context: context,
+      builder: (context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
     _formKey.currentState!.save();
-
-    final userCredentials = await _firebase.signInWithEmailAndPassword(
+    authService.signInEmailAndPassword(
       email: _enteredEmail,
       password: _enteredPassword,
     );
-    Navigator.pop(context);
+
+    ///
+    // ignore: use_build_context_synchronously
+    closePage(context);
   }
+
+  void closePage(BuildContext context) {
+    Navigator.of(context).pop();
+  }
+
+  // Future<bool> isUserExist() async {
+  //   try {
+  //     var result = await _firebase.fetchSignInMethodsForEmail(_enteredEmail);
+  //     return result.isNotEmpty;
+  //   } catch (e) {
+  //     debugPrint('Error checking user existence: $e');
+  //     return false;
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          elevation: 0.0,
-          backgroundColor: Colors.transparent,
-          title: appBar(context)),
+        elevation: 0.0,
+        backgroundColor: Colors.transparent,
+        title: appBar(context),
+      ),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 25),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Icon(
@@ -98,7 +120,6 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   keyboardType: TextInputType.emailAddress,
                   autocorrect: false,
-                  textCapitalization: TextCapitalization.none,
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
@@ -110,7 +131,9 @@ class _LoginPageState extends State<LoginPage> {
                     return null;
                   },
                   decoration: const InputDecoration(
-                      hintText: 'Password', labelText: 'Password'),
+                    hintText: 'Password',
+                    labelText: 'Password',
+                  ),
                   onSaved: (value) {
                     _enteredPassword = value!;
                   },
@@ -145,10 +168,11 @@ class _LoginPageState extends State<LoginPage> {
                     GestureDetector(
                       onTap: () {
                         Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const SignUpPage(),
-                            ));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SignUpPage(),
+                          ),
+                        );
                       },
                       child: const Text(
                         'Sign Up',

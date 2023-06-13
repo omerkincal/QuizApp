@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ypyprojeodevi/home_page.dart';
-import 'package:ypyprojeodevi/screens/login_page.dart';
+
+import '/home_page.dart';
+import '/screens/login_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,23 +14,38 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
+  Widget currentPage = const Text('');
   @override
   void initState() {
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
-    Future.delayed(const Duration(seconds: 2), () {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (_) => StreamBuilder(
-                stream: FirebaseAuth.instance.authStateChanges(),
-                builder: (ctx, snapshot) {
-                  if (snapshot.hasData) {
-                    return const HomePage();
-                  }
-                  return const LoginPage();
-                },
-              )));
-    });
+    /// Bekletme Metodu
+    Future.delayed(
+      const Duration(seconds: 2),
+      () {
+        ///
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (_) => StreamBuilder(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (ctx, snapshot) {
+                /// Kullanıcı Giriş Yapmışsa
+                if (snapshot.hasData) {
+                  currentPage = const HomePage();
+                  return const HomePage();
+                } else if (!snapshot.hasData) {
+                  currentPage = const LoginPage();
+                }
+                return currentPage;
+
+                /// Giriş Yapılmamışsa
+              },
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -50,24 +66,25 @@ class _SplashScreenState extends State<SplashScreen>
           color: Theme.of(context).primaryColor,
         ),
         child: const Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.quiz_outlined,
-                size: 80,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.quiz_outlined,
+              size: 80,
+              color: Colors.white,
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Welcome to Quiz App',
+              style: TextStyle(
                 color: Colors.white,
+                fontSize: 23,
+                fontWeight: FontWeight.bold,
+                fontFamily: AutofillHints.middleName,
               ),
-              SizedBox(height: 20),
-              Text(
-                'Welcome to Quiz App',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 23,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: AutofillHints.middleName,
-                ),
-              )
-            ]),
+            )
+          ],
+        ),
       ),
     );
   }

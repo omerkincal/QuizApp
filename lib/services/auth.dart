@@ -1,43 +1,57 @@
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:ypyprojeodevi/models/user.dart';
+import 'dart:developer' as ui;
 
-// class AuthService {
-//   FirebaseAuth _auth = FirebaseAuth.instance;
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart' show debugPrint;
 
-//   Student? _userFromFirebaseUser(User? user) {
-//     return user != null ? Student(uid: user.uid) : null;
-//   }
+class Auth {
+  ///
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-//   Future signInEmailAndPassword(String email, String password) async {
-//     try {
-//       UserCredential authResult = await _auth.signInWithEmailAndPassword(
-//         email: email,
-//         password: password,
-//       );
-//       User? firebaseUser = authResult.user;
-//       return _userFromFirebaseUser(firebaseUser);
-//     } catch (e) {
-//       print(e.toString());
-//     }
-//   }
+  /// [Email ve Şifre İle Giriş Yap]
+  Future<void> signInEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      await _firebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      ui.log("[signInWithEmailAndPassword]: ${_firebaseAuth.currentUser}");
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
 
-//   Future signUpwithEmailAndPassword(String email, String password) async {
-//     try {
-//       UserCredential authResult = await _auth.createUserWithEmailAndPassword(
-//           email: email, password: password);
-//       User? firebaseUser = authResult.user;
-//       return _userFromFirebaseUser(firebaseUser);
-//     } catch (e) {
-//       print(e.toString());
-//     }
-//   }
+  /// [Email ve Şifre İle Kaydol]
+  Future<void> signUpwithEmailAndPassword(String email, String password) async {
+    try {
+      await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      ui.log("[signUpwithEmailAndPassword]: ${_firebaseAuth.currentUser}");
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
 
-//   Future signOut() async {
-//     try {
-//       return await _auth.signOut();
-//     } catch (e) {
-//       print(e.toString());
-//       return null;
-//     }
-//   }
-// }
+  /// [Çıkış Yap]
+  Future<void> signOut() async {
+    try {
+      ui.log("[signOut]: ${_firebaseAuth.currentUser}");
+      return await _firebaseAuth.signOut();
+    } catch (e) {
+      ui.log("[signOut-error]: $e");
+    }
+  }
+
+  // Future controlUp() async{
+  //   try {
+  //     return await _auth.che
+  //   }catch(e){
+
+  //   }
+
+  // }
+}

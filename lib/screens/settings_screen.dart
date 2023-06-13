@@ -11,10 +11,12 @@ class SettingsScreen extends StatelessWidget {
       ),
       body: Center(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 70),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 70,
+          ),
           child: const Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text('Name'),
               Text('Name'),

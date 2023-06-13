@@ -1,9 +1,10 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:ypyprojeodevi/screens/main_page.dart';
-import 'package:ypyprojeodevi/widgets/categories_page.dart';
-import 'package:ypyprojeodevi/widgets/drawer.dart';
+
+import '/screens/main_page.dart';
+import 'screens/categories_page.dart';
+import '/widgets/drawer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -33,32 +34,38 @@ class _HomePageState extends State<HomePage> {
       ),
       drawer: drawer(context),
       body: Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: BoxDecoration(
-            color: Colors.deepPurple[200],
-          ),
-          child: _pages[_selectedIndex]),
-      bottomNavigationBar: Container(
+        width: double.infinity,
+        height: double.infinity,
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
+          color: Colors.deepPurple[300],
         ),
-        child: BottomNavigationBar(
-          selectedItemColor: Colors.white,
-          currentIndex: _selectedIndex,
-          onTap: _navigationBottomBar,
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          type: BottomNavigationBarType.fixed,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home Page',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.category),
-              label: 'Categories',
-            ),
-          ],
+        child: _pages[_selectedIndex],
+      ),
+      bottomNavigationBar: DecoratedBox(
+        decoration: const BoxDecoration(
+          color: Colors.amber,
+        ),
+        child: DecoratedBox(
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(13)),
+          child: BottomNavigationBar(
+            selectedItemColor: Colors.amber,
+            unselectedItemColor: Colors.white,
+            currentIndex: _selectedIndex,
+            onTap: _navigationBottomBar,
+            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+            type: BottomNavigationBarType.fixed,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home Page',
+                backgroundColor: Colors.amber,
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.category),
+                label: 'Categories',
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ypyprojeodevi/models/questions.dart';
+
+import '/models/questions.dart';
 
 class Category {
   Category({
