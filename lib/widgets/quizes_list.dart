@@ -35,7 +35,7 @@ class QuizesList extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Colors.deepPurple.shade300,
+                  color: Theme.of(context).dialogBackgroundColor,
                   border: Border.all(width: 5, color: Colors.deepPurple),
                   borderRadius: BorderRadius.circular(20),
                 ),

@@ -37,35 +37,30 @@ class _HomePageState extends State<HomePage> {
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
-          color: Colors.deepPurple[300],
+          color: Theme.of(context).colorScheme.background,
         ),
         child: _pages[_selectedIndex],
       ),
       bottomNavigationBar: DecoratedBox(
-        decoration: const BoxDecoration(
-          color: Colors.amber,
-        ),
-        child: DecoratedBox(
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(13)),
-          child: BottomNavigationBar(
-            selectedItemColor: Colors.amber,
-            unselectedItemColor: Colors.white,
-            currentIndex: _selectedIndex,
-            onTap: _navigationBottomBar,
-            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-            type: BottomNavigationBarType.fixed,
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home Page',
-                backgroundColor: Colors.amber,
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.category),
-                label: 'Categories',
-              ),
-            ],
-          ),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(13)),
+        child: BottomNavigationBar(
+          selectedItemColor: Theme.of(context).hintColor,
+          unselectedItemColor: Theme.of(context).colorScheme.surface,
+          currentIndex: _selectedIndex,
+          onTap: _navigationBottomBar,
+          backgroundColor: Theme.of(context).colorScheme.background,
+          type: BottomNavigationBarType.fixed,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.home),
+              label: 'Home Page',
+              backgroundColor: Theme.of(context).colorScheme.primary,
+            ),
+            const BottomNavigationBarItem(
+              icon: Icon(Icons.category),
+              label: 'Categories',
+            ),
+          ],
         ),
       ),
     );

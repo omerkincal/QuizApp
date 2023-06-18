@@ -50,7 +50,7 @@ class _QuestionShowingState extends State<QuestionShowing> {
                           padding: const EdgeInsets.all(24),
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.primary,
+                            color: Theme.of(context).primaryColor,
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: QuestionText(
@@ -71,105 +71,7 @@ class _QuestionShowingState extends State<QuestionShowing> {
                         .map((e) => _answerButton(e))
                         .toList(),
                   ),
-
                   _nextButton(),
-
-                  // for (var i = 0;
-                  //     i < widget.questionsList[_questionIndex].options.length;
-                  //     i++)
-                  // RadioListTile(
-                  //   title: Text(widget.questionsList[_questionIndex].options[i]),
-                  //   value: i,
-                  //   groupValue: selectedOption,
-                  //   onChanged: (value) {
-                  //     setState(() {
-                  //       selectedOption = i;
-                  //       print(selectedOption);
-                  //     });
-                  //   },
-                  // ),
-                  // RadioListTile(
-                  //   title: Text(widget.questionsList[_questionIndex].options[0]),
-                  //   value: 0,
-                  //   groupValue: selectedOption,
-                  //   onChanged: (value) {
-                  //     setState(() {
-                  //       selectedOption = value!;
-                  //       print(selectedOption);
-                  //     });
-                  //   },
-                  // ),
-                  // RadioListTile(
-                  //   title: Text(widget.questionsList[_questionIndex].options[1]),
-                  //   value: 1,
-                  //   groupValue: selectedOption,
-                  //   onChanged: (value) {
-                  //     setState(() {
-                  //       selectedOption = value!;
-                  //       print(selectedOption);
-                  //     });
-                  //   },
-                  // ),
-                  // RadioListTile(
-                  //   title: Text(widget.questionsList[_questionIndex].options[2]),
-                  //   value: 2,
-                  //   groupValue: selectedOption,
-                  //   onChanged: (value) {
-                  //     setState(() {
-                  //       selectedOption = value!;
-                  //       print(selectedOption);
-                  //     });
-                  //   },
-                  // ),
-                  // RadioListTile(
-                  //   title: Text(widget.questionsList[_questionIndex].options[3]),
-                  //   value: 3,
-                  //   groupValue: selectedOption,
-                  //   onChanged: (value) {
-                  //     setState(() {
-                  //       selectedOption = value!;
-                  //       print(selectedOption);
-                  //       print(widget.questionsList.length);
-                  //       print(_questionIndex);
-                  //     });
-                  //   },
-                  // ),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.end,
-                  //   children: [
-                  //     _questionIndex != 0
-                  //         ? IconButton(
-                  //             onPressed: () {
-                  //               setState(() {
-                  //                 _questionIndex--;
-                  //               });
-                  //             },
-                  //             icon: const Icon(Icons.arrow_back))
-                  //         : const Text(''),
-                  //     _questionIndex == 4
-                  //         ? TextButton(
-                  //             onPressed: () {
-                  //               Navigator.push(
-                  //                   context,
-                  //                   MaterialPageRoute(
-                  //                       builder: (context) =>
-                  //                           ResultPage(puan: puan)));
-                  //             },
-                  //             child: const Text('Sonucu görmek için tıkla...'))
-                  //         : IconButton(
-                  //             onPressed: () {
-                  //               setState(() {
-                  //                 selectedOption = 4;
-                  //                 if (selectedOption ==
-                  //                     widget.questionsList[_questionIndex]) {
-                  //                   puan = puan + 5;
-                  //                 }
-                  //               });
-                  //               _questionIndex++;
-                  //             },
-                  //             icon: const Icon(Icons.arrow_forward))
-                  //   ],
-                  // )
                 ],
               ),
             ),
@@ -189,8 +91,9 @@ class _QuestionShowingState extends State<QuestionShowing> {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           shape: const StadiumBorder(),
-          backgroundColor:
-              isSelected ? Colors.blue : Colors.deepPurple.shade200,
+          backgroundColor: isSelected
+              ? Colors.blue
+              : Theme.of(context).colorScheme.background,
           foregroundColor: isSelected ? Colors.white : Colors.white,
         ),
         onPressed: () {
@@ -222,7 +125,7 @@ class _QuestionShowingState extends State<QuestionShowing> {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           shape: const StadiumBorder(),
-          backgroundColor: Colors.deepPurple.shade500,
+          backgroundColor: Theme.of(context).primaryColorDark,
           foregroundColor: Colors.white,
         ),
         onPressed: () {

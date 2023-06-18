@@ -1,52 +1,25 @@
 // ignore_for_file: unused_local_variable
 
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
-import '../services/auth.dart';
-import '/screens/signup.dart';
 import '/widgets/quizappbar_text.dart';
 
-final _firebase = FirebaseAuth.instance;
+// final _firebase = FirebaseAuth.instance;
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final Function()? onTap;
+  const LoginPage({super.key, required this.onTap});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _formKey = GlobalKey<FormState>();
-  var _enteredEmail = '';
-  var _enteredPassword = '';
-  // AuthService authService = AuthService();
-  bool isLoading = false;
-
-  final Auth authService = Auth();
-
-  // signIn() async {
-  //   if (_formKey.currentState!.validate()) {
-  //     setState(() {
-  //       isLoading = true;
-  //     });
-  //     await authService.signInEmailAndPassword(email, password).then((value) {
-  //       if (value != null) {
-  //         setState(() {
-  //           isLoading = false;
-  //         });
-  //         Navigator.pushReplacement(context,
-  //             MaterialPageRoute(builder: (context) => const HiddenDrawer()));
-  //       }
-  //     });
-  //   }
-  // }
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   void _signIn() async {
-    final isValid = _formKey.currentState!.validate();
-    if (!isValid) {
-      return;
-    }
     showDialog(
       context: context,
       builder: (context) {
@@ -55,30 +28,26 @@ class _LoginPageState extends State<LoginPage> {
         );
       },
     );
-    _formKey.currentState!.save();
-    authService.signInEmailAndPassword(
-      email: _enteredEmail,
-      password: _enteredPassword,
-    );
-
-    ///
-    // ignore: use_build_context_synchronously
-    closePage(context);
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+      if (context.mounted) Navigator.of(context).pop();
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found' || e.code == 'wrong-password') {
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Wrong email or wrong password!',
+            ),
+          ),
+        );
+        if (context.mounted) Navigator.of(context).pop();
+      }
+    }
   }
-
-  void closePage(BuildContext context) {
-    Navigator.of(context).pop();
-  }
-
-  // Future<bool> isUserExist() async {
-  //   try {
-  //     var result = await _firebase.fetchSignInMethodsForEmail(_enteredEmail);
-  //     return result.isNotEmpty;
-  //   } catch (e) {
-  //     debugPrint('Error checking user existence: $e');
-  //     return false;
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -88,102 +57,87 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: Colors.transparent,
         title: appBar(context),
       ),
-      body: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 25),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.person,
-                  size: 200,
-                  color: Colors.deepPurple,
-                ),
-                const SizedBox(height: 50),
-                TextFormField(
-                  onSaved: (value) {
-                    _enteredEmail = value!;
-                  },
-                  validator: (val) {
-                    if (val == null ||
-                        val.trim().isEmpty ||
-                        !val.contains('@')) {
-                      return 'Please enter a valid email address!';
-                    }
-                    return null;
-                  },
-                  decoration: const InputDecoration(
-                    hintText: 'Email',
-                    labelText: 'Email',
+      body: SingleChildScrollView(
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 25),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.person,
+                size: 200,
+                color: Theme.of(context).primaryColorDark,
+              ),
+              const SizedBox(height: 50),
+              TextField(
+                controller: emailController,
+                decoration: InputDecoration(
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
                   ),
-                  keyboardType: TextInputType.emailAddress,
-                  autocorrect: false,
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey.shade400),
+                  ),
+                  fillColor: Theme.of(context).dialogBackgroundColor,
+                  filled: true,
+                  hintText: 'Email',
+                  hintStyle: TextStyle(color: Colors.grey[500]),
                 ),
-                const SizedBox(height: 10),
-                TextFormField(
-                  obscureText: true,
-                  validator: (val) {
-                    if (val == null || val.trim().length < 6) {
-                      return 'Password must be at least 7 characters long!';
-                    }
-                    return null;
-                  },
-                  decoration: const InputDecoration(
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                controller: passwordController,
+                obscureText: true,
+                decoration: InputDecoration(
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey.shade400),
+                    ),
+                    fillColor: Theme.of(context).dialogBackgroundColor,
+                    filled: true,
                     hintText: 'Password',
-                    labelText: 'Password',
-                  ),
-                  onSaved: (value) {
-                    _enteredPassword = value!;
-                  },
+                    hintStyle: TextStyle(color: Colors.grey[500])),
+              ),
+              const SizedBox(height: 20),
+              Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: Theme.of(context).primaryColor,
                 ),
-                const SizedBox(height: 20),
-                Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: Colors.deepPurple,
+                child: TextButton(
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    foregroundColor: Colors.deepPurple.shade300,
                   ),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      foregroundColor: Colors.deepPurple.shade300,
+                  onPressed: _signIn,
+                  child: const Text(
+                    'Login',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
                     ),
-                    onPressed: _signIn,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Don\'t have an account?   '),
+                  GestureDetector(
+                    onTap: widget.onTap,
                     child: const Text(
-                      'Login',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
-                      ),
+                      'Sign Up',
+                      style: TextStyle(decoration: TextDecoration.underline),
                     ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('Don\'t have an account?   '),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SignUpPage(),
-                          ),
-                        );
-                      },
-                      child: const Text(
-                        'Sign Up',
-                        style: TextStyle(decoration: TextDecoration.underline),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 100),
-              ],
-            ),
+                ],
+              ),
+              const SizedBox(height: 100),
+            ],
           ),
         ),
       ),

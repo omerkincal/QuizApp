@@ -1,8 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class SettingsScreen extends StatelessWidget {
+import 'reset_password.dart';
+
+final user = FirebaseAuth.instance.currentUser!;
+
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,12 +25,36 @@ class SettingsScreen extends StatelessWidget {
             horizontal: 20,
             vertical: 70,
           ),
-          child: const Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: ListView(
             children: [
-              Text('Name'),
-              Text('Name'),
-              Text('Name'),
+              Row(
+                children: [
+                  Icon(
+                    Icons.person,
+                    size: 40,
+                    color: Theme.of(context).colorScheme.background,
+                  ),
+                  const SizedBox(width: 15),
+                  Text(
+                    user.email!,
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                ],
+              ),
+              Divider(
+                height: 20,
+                thickness: 2,
+                color: Theme.of(context).colorScheme.background,
+              ),
+              ListTile(
+                title: const Text('Change the password'),
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const ForgotPasswordPage(),
+                  ),
+                ),
+              )
             ],
           ),
         ),

@@ -23,6 +23,10 @@ class _AppState extends State<App> {
 
       ///
       theme: themeApp,
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+      ),
+      themeMode: ThemeMode.dark,
     );
   }
 }

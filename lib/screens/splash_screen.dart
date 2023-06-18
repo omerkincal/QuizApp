@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 
 import '/home_page.dart';
 import '/screens/login_page.dart';
+import 'auth_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -26,23 +27,7 @@ class _SplashScreenState extends State<SplashScreen>
       () {
         ///
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (_) => StreamBuilder(
-              stream: FirebaseAuth.instance.authStateChanges(),
-              builder: (ctx, snapshot) {
-                /// Kullanıcı Giriş Yapmışsa
-                if (snapshot.hasData) {
-                  currentPage = const HomePage();
-                  return const HomePage();
-                } else if (!snapshot.hasData) {
-                  currentPage = const LoginPage();
-                }
-                return currentPage;
-
-                /// Giriş Yapılmamışsa
-              },
-            ),
-          ),
+          MaterialPageRoute(builder: (_) => const AuthPage()),
         );
       },
     );

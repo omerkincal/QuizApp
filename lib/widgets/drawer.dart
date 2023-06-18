@@ -6,21 +6,30 @@ import '../home_page.dart';
 
 @override
 Widget drawer(BuildContext context) {
+  final user = FirebaseAuth.instance.currentUser!;
+
   return Drawer(
     child: ListView(
       padding: EdgeInsets.zero,
       children: [
-        const DrawerHeader(
+        DrawerHeader(
           decoration: BoxDecoration(
-            color: Colors.deepPurple,
+            color: Theme.of(context).colorScheme.background,
           ),
-          child: Text(
-            'Hoş Geldin',
-            style: TextStyle(color: Colors.white, fontSize: 25),
+          child: Center(
+            child: Text(
+              'Hoş Geldin ${user.email} ',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 25,
+              ),
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
         ListTile(
           title: const Text('Home Page'),
+          leading: const Icon(Icons.home),
           onTap: () {
             Navigator.push(
               context,
@@ -29,6 +38,7 @@ Widget drawer(BuildContext context) {
           },
         ),
         ListTile(
+          leading: const Icon(Icons.favorite),
           title: const Text('Favorites'),
           onTap: () {
             Navigator.push(
@@ -38,17 +48,19 @@ Widget drawer(BuildContext context) {
           },
         ),
         ListTile(
+          leading: const Icon(Icons.settings),
           title: const Text('Settings'),
           onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const SettingsScreen(),
+                builder: (context) => SettingsScreen(),
               ),
             );
           },
         ),
         ListTile(
+          leading: const Icon(Icons.logout),
           title: const Text('Logout'),
           onTap: FirebaseAuth.instance.signOut,
         ),
