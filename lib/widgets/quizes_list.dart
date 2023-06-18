@@ -22,7 +22,7 @@ class QuizesList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Quizlerin Listesi'),
+        title: const Text('Quiz\'s List'),
       ),
       body: ListView.builder(
         itemCount: quizesList.length,

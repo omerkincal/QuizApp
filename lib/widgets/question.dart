@@ -22,6 +22,7 @@ class QuestionText extends ConsumerWidget {
           questionText,
           style: const TextStyle(
             color: Colors.white,
+            fontSize: 20,
           ),
         ),
         IconButton(
