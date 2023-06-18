@@ -35,8 +35,11 @@ class QuizesList extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).dialogBackgroundColor,
-                  border: Border.all(width: 5, color: Colors.deepPurple),
+                  color: Theme.of(context).dividerColor,
+                  border: Border.all(
+                    width: 5,
+                    color: Theme.of(context).primaryColor,
+                  ),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 margin: const EdgeInsets.only(top: 25, right: 30, left: 30),
@@ -45,10 +48,10 @@ class QuizesList extends StatelessWidget {
                 child: Text(
                   'Quiz ${index + 1}',
                   textAlign: TextAlign.start,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                  ),
+                  style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
             ),

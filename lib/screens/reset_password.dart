@@ -36,8 +36,28 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       await FirebaseAuth.instance.sendPasswordResetEmail(
         email: _emailController.text.trim(),
       );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Check your email!',
+            ),
+          ),
+        );
+      }
     } on FirebaseAuthException catch (e) {
       debugPrint(e.toString());
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'This email doesn\'t exist or you typed it wrong!',
+            ),
+          ),
+        );
+      }
     }
   }
 

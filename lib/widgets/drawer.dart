@@ -18,10 +18,10 @@ Widget drawer(BuildContext context) {
           ),
           child: Center(
             child: Text(
-              'Hoş Geldin ${user.email} ',
+              'Hoş Geldin \n ${user.email} ',
               style: const TextStyle(
                 color: Colors.white,
-                fontSize: 25,
+                fontSize: 20,
               ),
               textAlign: TextAlign.center,
             ),
@@ -54,7 +54,7 @@ Widget drawer(BuildContext context) {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => SettingsScreen(),
+                builder: (context) => const SettingsScreen(),
               ),
             );
           },

@@ -44,19 +44,18 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: DecoratedBox(
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(13)),
         child: BottomNavigationBar(
-          selectedItemColor: Theme.of(context).hintColor,
-          unselectedItemColor: Theme.of(context).colorScheme.surface,
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Theme.of(context).disabledColor,
           currentIndex: _selectedIndex,
           onTap: _navigationBottomBar,
           backgroundColor: Theme.of(context).colorScheme.background,
           type: BottomNavigationBarType.fixed,
-          items: <BottomNavigationBarItem>[
+          items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: const Icon(Icons.home),
+              icon: Icon(Icons.home),
               label: 'Home Page',
-              backgroundColor: Theme.of(context).colorScheme.primary,
             ),
-            const BottomNavigationBarItem(
+            BottomNavigationBarItem(
               icon: Icon(Icons.category),
               label: 'Categories',
             ),

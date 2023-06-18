@@ -6,7 +6,7 @@ import '../models/questions.dart';
 class FavoriteQuestionsNotifier extends StateNotifier<List<Question>> {
   FavoriteQuestionsNotifier() : super([]);
 
-  bool toggleMealFavoritesStatus(Question question) {
+  bool toggleQuestionFavoritesStatus(Question question) {
     final questionIsFavorite = state.contains(question);
 
     if (questionIsFavorite) {

@@ -1,9 +1,14 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'question.dart';
+
 import '../models/questions.dart';
+import 'question.dart';
 
 class QuestionShowing extends StatefulWidget {
-  const QuestionShowing({super.key, required this.questionsList});
+  const QuestionShowing({
+    Key? key,
+    required this.questionsList,
+  }) : super(key: key);
   final List<Question> questionsList;
 
   @override
@@ -22,59 +27,50 @@ class _QuestionShowingState extends State<QuestionShowing> {
       appBar: AppBar(
         title: const Text('Quiz'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-        child: Card(
-          child: SingleChildScrollView(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        '${currentQuestionIndex + 1}/${widget.questionsList.length}',
-                        textAlign: TextAlign.end,
-                        style: textStyle,
-                      ),
-                    ],
+                  Text(
+                    '${currentQuestionIndex + 1}/${widget.questionsList.length}',
+                    textAlign: TextAlign.end,
+                    style: textStyle,
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 3,
-                        child: Container(
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.all(24),
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColor,
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: QuestionText(
-                            questionText: widget
-                                .questionsList[currentQuestionIndex]
-                                .questionText,
-                          ),
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.favorite),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: widget.questionsList[currentQuestionIndex].options
-                        .map((e) => _answerButton(e))
-                        .toList(),
-                  ),
-                  _nextButton(),
                 ],
               ),
-            ),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.all(24),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: QuestionText(
+                        question: widget.questionsList[currentQuestionIndex],
+                        questionText: widget
+                            .questionsList[currentQuestionIndex].questionText,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                children: widget.questionsList[currentQuestionIndex].options
+                    .map((e) => _answerButton(e))
+                    .toList(),
+              ),
+              _nextButton(),
+            ],
           ),
         ),
       ),

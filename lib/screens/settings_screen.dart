@@ -54,6 +54,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     builder: (_) => const ForgotPasswordPage(),
                   ),
                 ),
+              ),
+              const SizedBox(height: 20),
+              const ListTile(
+                title: Text('Change the theme'),
+                subtitle: Text(
+                  '\n (This is automatically connected to your system. \n If you want to switch to dark mode, select it manually in the settings of your device.)',
+                ),
               )
             ],
           ),
